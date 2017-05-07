@@ -29,6 +29,7 @@ class Pictures(models.Model):
     long_description = models.TextField(max_length=500)
     date_created = models.DateField(date)
 
+
 class CompanyInfo(models.Model):
     co_name = models.CharField(max_length=100)
     logo = models.ImageField
@@ -38,7 +39,7 @@ class CompanyInfo(models.Model):
     address1 = models.TextField(max_length=100)
     address2 = models.TextField(max_length=100)
     tell = models.IntegerField()
-    instagram = models.URLField(max_length=20)
+    instagram = models.URLField()
     email = models.EmailField()
     facebook = models.URLField
 
