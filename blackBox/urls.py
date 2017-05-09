@@ -16,9 +16,27 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import RedirectView
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        field = ('fname','lname','email')
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+router = routers.DefaultRouter()
+router.register(r'users',UserViewSet)
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'blog/',include('blog.urls')),
     url(r'^$', RedirectView.as_view(url='/blog/', permanent=True)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
