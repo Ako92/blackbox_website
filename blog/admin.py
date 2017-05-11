@@ -4,9 +4,10 @@ from . models import CompanyInfo, Video, Picture, Customer, Profile
 
 # Register your models here.
 admin.site.register(Profile)
-admin.site.register(Video)
 admin.site.register(Customer)
 admin.site.register(Picture)
+admin.site.register(Video)
+
 
 
 @admin.register(CompanyInfo)
@@ -22,4 +23,20 @@ class CompanyInfoView(admin.ModelAdmin):
         }
         )
     )
+
+    def has_add_permission(self, request):
+        # if there's already an entry, do not allow adding
+        count = CompanyInfo.objects.all().count()
+        if count == 0:
+            return True
+        return False
+
+    def image_img(self):
+        if self.image:
+            return u'<img src="%s" />' % self.image.url
+        else:
+            return '(No image found)'
+
+    image_img.short_description = 'Thumb'
+    image_img.allow_tags = True
 

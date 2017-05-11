@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 import uuid
 from geoposition.fields import GeopositionField
+from django.core.files.storage import FileSystemStorage
+# from django.contrib.sites.models import Site
 # from django.db.models.signals import post_save
 # from django.dispatch import receiver
 # from datetime import datetime
@@ -19,15 +21,18 @@ phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number mus
 
 
 class Profile(models.Model):
+    personal_photo = models.ImageField(upload_to='uploaded/profile/picture',blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=15, validators=[phone_regex], blank=True)  # validators should be a list
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
+    # videos = models.ForeignKey('Video')
+    # picture = models.ForeignKey('Picture')
 
 
 class Video(models.Model):
     project_name = models.CharField(max_length=20)
-    video_path = models.FilePathField()
+    video_path = models.FileField(upload_to='uploaded/customer/videos')
     short_description = models.TextField(max_length=100)
     long_description = models.TextField(max_length=500)
     date_created = models.DateField()
@@ -37,7 +42,7 @@ class Video(models.Model):
 
 
 class Picture(models.Model):
-    pic_source = models.FilePathField()
+    pic_source = models.ImageField(upload_to='uploaded/customer/pics')
     project_name = models.CharField(max_length=20)
     short_description = models.TextField(max_length=100)
     long_description = models.TextField(max_length=500)
@@ -47,10 +52,10 @@ class Picture(models.Model):
     def __str__(self):              # __unicode__ on Python 2
         return self.project_name
 
-
 class CompanyInfo(models.Model):
+    # site = models.OneToOneField(Site)
     co_name = models.CharField(max_length=100)
-    logo = models.FilePathField(blank=True)
+    logo = models.ImageField(upload_to='uploaded/website/',blank=True)
     short_description = models.TextField(max_length=200, help_text='Max length 200')
     address1 = models.CharField(max_length=150)
     address2 = models.CharField(max_length=150)
