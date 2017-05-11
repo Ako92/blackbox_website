@@ -52,6 +52,7 @@ class Picture(models.Model):
     def __str__(self):              # __unicode__ on Python 2
         return self.project_name
 
+
 class CompanyInfo(models.Model):
     # site = models.OneToOneField(Site)
     co_name = models.CharField(max_length=100)
