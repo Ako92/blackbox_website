@@ -19,6 +19,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
+# Google maps Api
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyDz7TMtyYyo0QPdOglvvJOhK97g2VIILwc'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^*f2j!61g2nr*h3cr#-l=_(oe2uel@)28+d(_5w4&mt9wv0*e&'
 
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'rest_framework',
+    'geoposition',
 ]
 
 MIDDLEWARE = [
