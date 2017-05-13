@@ -19,6 +19,15 @@ def user_directory_path(instance, filename):
 phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format:"
                                                                " '+999999999'. ""Up to 15 digits allowed.")
 
+class SocialAccount(models.Model):
+    name = models.CharField(max_length=20)
+    link = models.URLField()
+    logo = models.ImageField(upload_to='uploaded/social/')
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.name
+
+
 
 class Profile(models.Model):
     personal_photo = models.ImageField(upload_to='uploaded/profile/picture',blank=True)
@@ -26,6 +35,8 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=15, validators=[phone_regex], blank=True)  # validators should be a list
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
+    linked_in = models.EmailField(blank=True)
+    email = models.EmailField(blank=True)
     # videos = models.ForeignKey('Video')
     # picture = models.ForeignKey('Picture')
 
@@ -62,8 +73,8 @@ class CompanyInfo(models.Model):
     address2 = models.CharField(max_length=150)
     position = GeopositionField()
     phone_number = models.CharField(max_length=15, validators=[phone_regex], blank=True)  # validators should be a list
-    instagram = models.EmailField(blank=True)
-    info_email = models.EmailField()
+    instagram = models.ManyToManyField('SocialAccount',null=True)#This null=True is just for develpment.i have too erase it soon
+    email = models.EmailField()
 
     class Meta:
         verbose_name_plural = 'Company information'
