@@ -23,7 +23,7 @@ from rest_framework import routers, serializers, viewsets
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        field = ('fname','lname','email')
+        field = ('url', 'username', 'email', 'is_staff')
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -31,12 +31,14 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 router = routers.DefaultRouter()
-router.register(r'users',UserViewSet)
+router.register(r'users', UserViewSet)
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'blog/',include('blog.urls')),
-    url(r'^$', RedirectView.as_view(url='/blog/', permanent=True)),
+    #url(r'^$', RedirectView.as_view(url='/blog/', permanent=True)),
+    url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
+admin.site.site_header='Black Box Adminstration'

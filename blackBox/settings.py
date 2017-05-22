@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Google maps Api
 GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyDz7TMtyYyo0QPdOglvvJOhK97g2VIILwc'
+GOOGLE_MAPS_API_KEY = 'AIzaSyDz7TMtyYyo0QPdOglvvJOhK97g2VIILwc'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^*f2j!61g2nr*h3cr#-l=_(oe2uel@)28+d(_5w4&mt9wv0*e&'
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'rest_framework',
     'geoposition',
+
 ]
 
 MIDDLEWARE = [
@@ -106,6 +108,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -124,4 +133,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/data/static/'
+STATIC_ROOT = 'data/static'
+
